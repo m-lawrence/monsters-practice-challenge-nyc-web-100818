@@ -12,6 +12,7 @@ function renderOneMonster(monsterObj) {
     monsterDiv.dataset.id = monsterObj.id 
 
     monsterDiv.innerHTML = `Name: ${monsterObj.name} Age: ${monsterObj.age} Description: ${monsterObj.description}`
+    // need to change this to create new/separate elements to append to the div
 
     monsterContainer.append(monsterDiv)
 }
@@ -20,7 +21,9 @@ function renderAllMonsters() {
 
     fetch('http://localhost:3000/monsters')
         .then(r => r.json())
-        .then(monstersArr => monstersArr.forEach(monster => renderOneMonster(monster)))
+        .then(monstersArr => monstersArr.forEach(monster => {
+            if(monster.id <= 49) renderOneMonster(monster)
+        }))
 
 }
 
