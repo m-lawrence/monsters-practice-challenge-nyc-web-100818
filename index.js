@@ -20,6 +20,8 @@ function renderAllMonsters() {
 
     fetch('http://localhost:3000/monsters')
         .then(r => r.json())
-        .then(data => console.log(data))
+        .then(monstersArr => monstersArr.forEach(monster => renderOneMonster(monster)))
 
 }
+
+renderAllMonsters()
