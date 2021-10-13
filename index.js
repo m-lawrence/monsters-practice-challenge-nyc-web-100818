@@ -10,10 +10,15 @@ function renderOneMonster(monsterObj) {
     const monsterDiv = document.createElement('div')
     monsterDiv.classList.add('monster-card')
     monsterDiv.dataset.id = monsterObj.id 
+    const monsterName = document.createElement('p')
+    const monsterAge = document.createElement('p')
+    const monsterDescription = document.createElement('p')
 
-    monsterDiv.innerHTML = `Name: ${monsterObj.name} Age: ${monsterObj.age} Description: ${monsterObj.description}`
-    // need to change this to create new/separate elements to append to the div
+    monsterName.textContent = `Name: ${monsterObj.name}`
+    monsterAge.textContent = `Age: ${monsterObj.age}`
+    monsterDescription.textContent = `Description: ${monsterObj.description}`
 
+    monsterDiv.append(monsterName, monsterAge, monsterDescription)
     monsterContainer.append(monsterDiv)
 }
 
