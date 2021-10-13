@@ -5,6 +5,7 @@
 // Button at the end of list of monsters onClick displays the next 50 monsters
 
 const monsterContainer = document.querySelector('div#monster-container')
+const newMonsterForm = document.querySelector('form#newMonster')
 
 function renderOneMonster(monsterObj) {
     const monsterDiv = document.createElement('div')
@@ -31,5 +32,32 @@ function renderAllMonsters() {
         }))
 
 }
+
+newMonsterForm.addEventListener('submit', function(event) {
+    event.preventDefault()
+    
+    const nameInput = event.target.name.value
+    const ageInput = event.target.age.value
+    const descriptionInput = event.target.description.value
+
+    const newMonsterObj = {
+        name: nameInput,
+        age: ageInput,
+        description: descriptionInput
+    }
+
+    fetch('http://localhost:3000/monsters', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify(newMonsterObj)
+    })
+        .then(r => r.json())
+        .then(data => renderOneMonster(data))
+
+        newMonsterForm.reset()
+})
 
 renderAllMonsters()
