@@ -1,11 +1,11 @@
-// fetch monsters
-// display first 50 monsters w details
-// New monster form above list of monsters
-// Button onClick posts new monster to db
-// Button at the end of list of monsters onClick displays the next 50 monsters
+
 
 const monsterContainer = document.querySelector('div#monster-container')
 const newMonsterForm = document.querySelector('form#newMonster')
+let monsterMin = 1
+let monsterMax = 50
+const nextMonsters = document.querySelector('button#forward')
+const prevMonsters = document.querySelector('button#back')
 
 function renderOneMonster(monsterObj) {
     const monsterDiv = document.createElement('div')
@@ -28,7 +28,7 @@ function renderAllMonsters() {
     fetch('http://localhost:3000/monsters')
         .then(r => r.json())
         .then(monstersArr => monstersArr.forEach(monster => {
-            if(monster.id <= 49) renderOneMonster(monster)
+            if((monster.id <= monsterMax) && (monster.id >= monsterMin)) renderOneMonster(monster)
         }))
 
 }
@@ -55,9 +55,23 @@ newMonsterForm.addEventListener('submit', function(event) {
         body: JSON.stringify(newMonsterObj)
     })
         .then(r => r.json())
-        .then(data => renderOneMonster(data))
+        .then(renderAllMonsters())
 
         newMonsterForm.reset()
+})
+
+nextMonsters.addEventListener('click', function(e) {
+    monsterMax += 50
+    monsterMin += 50
+    monsterContainer.innerHTML = ""
+    renderAllMonsters()
+})
+
+prevMonsters.addEventListener('click', function(e) {
+    monsterMax -= 50
+    monsterMin -= 50
+    monsterContainer.innerHTML = ""
+    renderAllMonsters()
 })
 
 renderAllMonsters()
